@@ -82,6 +82,9 @@ export interface TooltipProps {
 
   /** */
   animationType?: 'fade' | 'none';
+
+  /** */
+  updateTooltipPositionCb?: any;
 }
 
 /** Tooltips display informative text when users tap on an element.
@@ -125,6 +128,7 @@ export const Tooltip: RneFunctionComponent<TooltipProps> = ({
   ModalComponent = Modal,
   closeOnlyOnBackdropPress = false,
   animationType = 'fade',
+  updateTooltipPositionCb,
   ...props
 }) => {
   const isMounted = React.useRef(false);
@@ -240,6 +244,7 @@ export const Tooltip: RneFunctionComponent<TooltipProps> = ({
    */
   React.useEffect(() => {
     isMounted.current = true;
+    updateTooltipPositionCb.current = getElementPosition;
     // Wait till element's position is calculated
     requestAnimationFrame(getElementPosition);
     const dimensionsListener = Dimensions.addEventListener(
